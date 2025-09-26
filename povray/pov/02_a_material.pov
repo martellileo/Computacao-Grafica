@@ -15,18 +15,18 @@ background {
   rgb <0.5,0.75,1>
 }
 
-// sky_sphere {
-//  pigment {
-//    gradient y
-//      color_map {
-//      [0.0 rgb <1,1,1>]          // horizonte é branco
-//      [0.8 rgb <0.1, 0.2, 0.5>]  // até azul claro em 80%
-//      [1.0 Blue]                 // e azul em 100%
-//      }
-//  }
-//  translate -0.5
-//  scale 1.5
-//}
+sky_sphere {
+ pigment {
+   gradient y
+     color_map {
+     [0.0 rgb <1,1,1>]          // horizonte é branco
+     [0.8 rgb <0.1, 0.2, 0.5>]  // até azul claro em 80%
+     [1.0 Blue]                 // e azul em 100%
+     }
+ }
+ translate -0.5
+ scale 1.5
+}
 
 camera {
   perspective// [perspective | orthographic | fisheye]
@@ -35,10 +35,10 @@ camera {
   look_at  <2.8, 0.5,  0>
 }
 
-#declare acabamento        = finish { }
-#declare acabamento_cubo   = finish { }
-#declare acabamento_cone   = finish { }
-#declare acabamento_esfera = finish { }
+#declare acabamento        = finish { bumps}
+#declare acabamento_cubo   = finish { reflection {0.7 metallic}}
+#declare acabamento_cone   = finish { phong 0.4}
+#declare acabamento_esfera = finish { ambient 0.1 }
 
 /*
   finish {
@@ -57,7 +57,6 @@ box {   // tamanho 1/1
       color Blue      // cor, pode ser rgb<R,G,B>, com 0 <= R,G,B <= 1
     }
     finish { acabamento }
-    finish { acabamento_cubo }
   }
 }
 
@@ -96,7 +95,6 @@ cone {   // cone 1/2
   <2.35, 1.6, -1.08>, 0
   texture {
     pigment { color Green }
-    finish  { acabamento_cone }
   }
 }
 
@@ -114,8 +112,8 @@ sphere {
   texture {
     pigment { color Red }
   }
-  finish { acabamento }
-  finish { acabamento_esfera }
+  normal { bumps 0.9 scale 0.05 }
+  finish  { acabamento }
 }
 
 sphere {
